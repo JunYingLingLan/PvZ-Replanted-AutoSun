@@ -4,15 +4,21 @@
 
 ## 快速开始
 
-仓库里**已经包含编译好的插件**，不需要任何编译环境：
+### 方式一：直接下载（不需要 git，推荐新手）
+
+**[⬇ 点击下载 PvZReplantedAutoSun.dll](https://github.com/JunYingLingLan/PvZ-Replanted-AutoSun/releases/latest)**（约 19 KB）
+
+把下载到的文件放进 `<游戏目录>\BepInEx\plugins\`，启动游戏即可。
+
+### 方式二：克隆仓库
 
 ```powershell
 git clone https://github.com/JunYingLingLan/PvZ-Replanted-AutoSun
 ```
 
-然后把 `release\PvZReplantedAutoSun.dll` 复制到 `<游戏目录>\BepInEx\plugins\`，启动游戏即可。
+编译好的插件就在 `release\PvZReplantedAutoSun.dll`。
 
-> 前提是游戏已经装好 BepInEx 6 (IL2CPP)。完整步骤见下方 [安装](#安装) 章节。
+> 两种方式都要求游戏已经装好 BepInEx 6 (IL2CPP)。完整步骤见下方 [安装](#安装) 章节。
 
 ## 它和常见的「自动收集」有什么不同
 
