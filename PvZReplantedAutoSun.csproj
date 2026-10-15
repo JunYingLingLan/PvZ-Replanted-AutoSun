@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>PvZReplantedAutoSun</AssemblyName>
+    <RootNamespace>PvZReplantedAutoSun</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Version>0.1.0</Version>
+    <DebugType>none</DebugType>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+    <!-- 游戏目录：优先取 -p:GameDir=... 或环境变量 PVZ_REPLANTED_DIR -->
+    <GameDir Condition="'$(GameDir)' == ''">$(PVZ_REPLANTED_DIR)</GameDir>
+  </PropertyGroup>
+
+  <!-- 编译前校验前提条件，给出明确的中文提示而不是一堆找不到类型的错误 -->
+  <Target Name="ValidateGameDir" BeforeTargets="ResolveAssemblyReferences">
+    <Error Condition="'$(GameDir)' == ''"
+           Text="未指定游戏目录。请用 -p:GameDir=&quot;D:\Steam\steamapps\common\Plants vs Zombies Replanted&quot;，或设置环境变量 PVZ_REPLANTED_DIR。" />
+    <Error Condition="!Exists('$(GameDir)\BepInEx\core\BepInEx.Unity.IL2CPP.dll')"
+           Text="在 $(GameDir)\BepInEx\core 下找不到 BepInEx.Unity.IL2CPP.dll。请先安装 BepInEx 6 (IL2CPP) 并至少运行一次游戏。" />
+    <Error Condition="!Exists('$(GameDir)\BepInEx\interop')"
+           Text="在 $(GameDir)\BepInEx\interop 下找不到 interop 程序集。请先运行一次游戏，让 BepInEx 生成 IL2CPP interop 程序集。" />
+    <Error Condition="!Exists('$(GameDir)\BepInEx\interop\UnityEngine.CoreModule.dll')"
+           Text="在 $(GameDir)\BepInEx\interop 下找不到 UnityEngine.CoreModule.dll。interop 程序集不完整，请重新启动一次游戏等待生成完毕。" />
+  </Target>
+
+  <ItemGroup>
+    <!-- BepInEx 6 运行时、Harmony 与 Il2CppInterop -->
+    <Reference Include="BepInEx.Core" HintPath="$(GameDir)\BepInEx\core\BepInEx.Core.dll" Private="false" />
+    <Reference Include="BepInEx.Unity.IL2CPP" HintPath="$(GameDir)\BepInEx\core\BepInEx.Unity.IL2CPP.dll" Private="false" />
+    <Reference Include="0Harmony" HintPath="$(GameDir)\BepInEx\core\0Harmony.dll" Private="false" />
+    <Reference Include="Il2CppInterop.Runtime" HintPath="$(GameDir)\BepInEx\core\Il2CppInterop.Runtime.dll" Private="false" />
+
+    <!-- Unity 各模块（interop 生成）。用通配符以适配不同版本模块划分，
+         不会引入 Il2Cppmscorlib.dll 与游戏程序集，避免类型冲突。 -->
+    <Reference Include="$(GameDir)\BepInEx\interop\UnityEngine*.dll" Private="false" />
+
+    <!-- IL2CPP 版 mscorlib 映射；存在才引用 -->
+    <Reference Include="Il2Cppmscorlib"
+               HintPath="$(GameDir)\BepInEx\interop\Il2Cppmscorlib.dll"
+               Private="false"
+               Condition="Exists('$(GameDir)\BepInEx\interop\Il2Cppmscorlib.dll')" />
+  </ItemGroup>
+
+</Project>

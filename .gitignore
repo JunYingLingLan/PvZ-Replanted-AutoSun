@@ -1,0 +1,15 @@
+# 编译产物
+bin/
+obj/
+release/
+refs.rsp
+
+# 编辑器
+.vs/
+.idea/
+*.user
+*.suo
+
+# 本地游戏环境
+BepInEx/
+*.log
