@@ -2,6 +2,18 @@
 
 《植物大战僵尸：重植版》(Plants vs. Zombies: Replanted) 的自动收集插件：自动收走**阳光、金币、银币、钻石**，同时**完全不占用你的鼠标**。
 
+## 快速开始
+
+仓库里**已经包含编译好的插件**，不需要任何编译环境：
+
+```powershell
+git clone https://github.com/JunYingLingLan/PvZ-Replanted-AutoSun
+```
+
+然后把 `release\PvZReplantedAutoSun.dll` 复制到 `<游戏目录>\BepInEx\plugins\`，启动游戏即可。
+
+> 前提是游戏已经装好 BepInEx 6 (IL2CPP)。完整步骤见下方 [安装](#安装) 章节。
+
 ## 它和常见的「自动收集」有什么不同
 
 大多数游戏自动化工具走的是「截屏找目标 → 模拟鼠标点击」：
@@ -61,7 +73,7 @@ GameplayActivity  (MonoBehaviour，用 FindObjectsOfType 取得)
 1. 把 BepInEx 6 (IL2CPP) 解压到游戏根目录，确认出现 `winhttp.dll`、`doorstop_config.ini`、`BepInEx\`；
    > 注意：`winhttp.dll` 必须和游戏 exe 在**同一层**。如果把 BepInEx 文件夹整个拖进去，会变成 `游戏目录\BepInEx-x.x.x\winhttp.dll`，注入不会生效。
 2. 启动一次游戏，等待 `BepInEx\interop\` 生成完毕（首次可能要几分钟，期间看起来像卡死），然后退出；
-3. 把编译好的 `PvZReplantedAutoSun.dll` 放进 `BepInEx\plugins\`；
+3. 把 `release\PvZReplantedAutoSun.dll` 复制进 `BepInEx\plugins\`（仓库已含编译好的版本，无需自行编译）；
 4. 启动游戏，进入关卡即可。
 
 ## 配置
